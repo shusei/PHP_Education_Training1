@@ -1,0 +1,107 @@
+h1 {
+    font-size: 72px;
+    text-align: center;
+    text-shadow: 1px 1px 2px red, 0 0 1em rgb(255, 153, 0), 0 0 0.2em rgb(94, 255, 0);
+    color: rgb(177, 76, 76);
+    letter-spacing: 2em;
+}
+
+.right {
+    position: relative;
+    float: right;
+    width: 450px;
+    height: auto;
+    padding: 10px 10px;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid purple;
+}
+
+thead {
+    background: url(pexels-photo-1955134.jpeg);
+    background-position: center;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgb(196, 165, 136);
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgb(192, 192, 137);
+}
+
+th,
+td {
+    border: 1px solid;
+}
+
+thead th:nth-child(1) {
+    width: 2.6%;
+}
+
+thead th:nth-child(2) {
+    width: 2%;
+}
+
+thead th:nth-child(3) {
+    width: 10%;
+}
+
+thead th:nth-child(4) {
+    width: 55.4%;
+}
+
+thead th:nth-child(5) {
+    width: 15%;
+}
+
+thead th:nth-child(6) {
+    width: 15%;
+}
+
+th,
+td {
+    padding: 20px;
+}
+
+th {
+    letter-spacing: 2px;
+    font-size: large;
+    font-weight: bold;
+}
+
+td {
+    letter-spacing: 1px;
+}
+
+tbody td {
+    text-align: center;
+}
+
+td.content {
+    text-align: left;
+}
+
+.styled {
+    margin: 1px;
+    float: right;
+    border: 0;
+    line-height: 2;
+    padding: 1px 10px;
+    font-size: 1em;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 2px rgb(0, 0, 0);
+    border-radius: 10px;
+    background-color: rgb(190, 116, 46);
+
+}
+
+.styled:hover {
+    background-color: rgb(255, 116, 46);
+}

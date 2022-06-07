@@ -1,0 +1,68 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid purple;
+}
+
+thead {
+    background: url(pexels-photo-1955134.jpeg);
+    background-position: center;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgb(196, 165, 136);
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgb(192, 192, 137);
+}
+
+th,
+td {
+    border: 1px solid;
+}
+
+thead th:nth-child(1) {
+    width: 2%;
+}
+
+thead th:nth-child(2) {
+    width: 10%;
+}
+
+thead th:nth-child(3) {
+    width: 58%;
+}
+
+thead th:nth-child(4) {
+    width: 15%;
+}
+
+thead th:nth-child(5) {
+    width: 15%;
+}
+
+th,
+td {
+    padding: 20px;
+}
+
+th {
+    letter-spacing: 2px;
+    font-size: large;
+    font-weight: bold;
+}
+
+td {
+    letter-spacing: 1px;
+}
+
+tbody td {
+    text-align: center;
+}
+
+td.content {
+    text-align: left;
+}
