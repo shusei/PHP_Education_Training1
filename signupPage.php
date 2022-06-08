@@ -28,6 +28,7 @@
             <label>Name: </label><input type="text" name="username" /><br>
             <label>Email: </label><input type="text" name="email" /><br>
             <label>Password: </label><input type="password" name="password" /><br>
+            <label>RePassword: </label><input type="password" name="password2" /><br>
             <input style="color: white; text-shadow: 1px 1px 2px black; border-radius: 10px; background-color: rgb(190, 116, 46);" type="submit" value="註冊" />
         </form>
     </div>

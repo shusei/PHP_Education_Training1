@@ -15,14 +15,24 @@
 
     $username = $_POST['username'];
     $email = $_POST['email'];
+    $password = $_POST['password'];
+    $password2 = $_POST['password2'];
+
+    if ($password != $password2) :
+    ?>
+        <p>密碼輸入不一致，請重新輸入！</p>
+        <a href="javascript:history.back()">回上一頁</a>
+    <?php
+        die();
+    endif;
+
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    date_default_timezone_set("Asia/Taipei");
     $signup_time = date("Y-m-d h:i:s");
 
     // Check already sign up
     try {
-        $sth = $dbh->prepare("SELECT * FROM users WHERE email = :email || username = :username");
+        $sth = $dbh->prepare("SELECT * FROM users WHERE email = :email OR username = :username");
         $sth->execute(array(
             'email' => $email,
             'username' => $username
@@ -33,11 +43,10 @@
     }
 
 
-    if (!empty($sth->fetch(PDO::FETCH_ASSOC))) {
+    if (!empty($sth->fetch(PDO::FETCH_ASSOC))) :
         echo '<a href="javascript:history.back()">回上一頁</a><br>';
         die("這個username或email已經被註冊過了");
-    } else {
-
+    else :
         // create
         try {
             $sth = $dbh->prepare("INSERT INTO users(username, email, password, signup_time)
@@ -58,7 +67,7 @@
         $login_time = date("Y-m-d h:i:s");
 
         try {
-            $sth = $dbh->prepare("SELECT * FROM users WHERE username = :username && password = :password");
+            $sth = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
             $sth->execute(array(
                 'username' => $username,
                 'password' => $password,
@@ -74,8 +83,6 @@
         session_start();
         $_SESSION['user_id'] = $id;
         $_SESSION['username'] = $username;
-        //echo $_SESSION['id'];
-        //header("Location: index.php");
 
         // Add login time
         try {
@@ -92,10 +99,10 @@
 
     ?>
 
-        註冊成功！<br>
+        <p>註冊成功！</p><br>
         <a href="index.php">登入</a>
     <?php
-    }
+    endif;
     ?>
 
 

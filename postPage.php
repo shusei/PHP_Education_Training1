@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <a href="index.php">回首頁</a><br>
     <form method="POST" action="post.php">
         <?php //name: <input type="text" name="username" /><br> 
         ?>

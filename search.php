@@ -5,10 +5,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="search.css" rel="stylesheet" type="text/css">
   <title>Search</title>
 </head>
-
-<link href="search.css" rel="stylesheet" type="text/css">
 
 <body>
 
@@ -19,10 +18,13 @@
 
   // Dont use empty() or you wont search "0"
   // content != ""
-  if (!isset($keyword) || $keyword == "") {
-    echo '<a href="index.php">回首頁</a><br>';
+  // https://www.php.net/manual/en/types.comparisons.php
+  if (!isset($keyword) || $keyword == "") :
+  ?>
+    <a href="index.php">回首頁</a><br>
+  <?php
     die('查詢欄位不可空。');
-  }
+  endif;
   ?>
 
   <a href="index.php">回首頁</a><br>
@@ -31,11 +33,12 @@
 
     <?php
     try {
-      $sth = $dbh->prepare("SELECT board.id, users.username, board.content, board.create_time, board.update_time FROM board INNER JOIN users ON board.user_id=users.id
-                          WHERE content LIKE :content OR username LIKE :username
-                          ORDER BY id DESC");
+      $sth = $dbh->prepare("SELECT board.id, users.username, board.content, board.create_time, board.update_time 
+                            FROM board INNER JOIN users ON board.user_id=users.id
+                            WHERE content LIKE :content OR username LIKE :username
+                            ORDER BY id DESC");
       $sth->execute(array(
-        'content' => '%' . $keyword . '%',
+        'content' => '%' . $keyword . '%',  // % 代表任意項任意值
         'username' => '%' . $keyword . '%'
       ));
       //print_r($sth->errorInfo());
@@ -48,7 +51,7 @@
     //print_r($result);
     //echo "Mom! I'm here!";
 
-    if (!empty($result)) {
+    if (!empty($result)) :
       //echo "Mom! I'm here!";
     ?>
 
@@ -91,9 +94,11 @@
       </table>
 
     <?php
-    } else {
-      echo "查無此資料。";
-    }
+    else :
+    ?>
+      <p>查無此資料。</p>
+    <?php
+    endif;
     ?>
 
   </div>

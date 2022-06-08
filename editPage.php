@@ -28,14 +28,10 @@ $result = $sth->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <body>
+    <a href="index.php">回首頁</a><br>
     <form method="POST" action="edit.php">
-        <!-- id: <input type="text" name="id" value="<?php //echo $result['id'] 
-                                                        ?>" readonly="readonly" /><br> -->
-        <!-- name: <input type="text" name="username" value="<?php //SESSION_start(); echo $_SESSION['username'] 
-                                                                ?>" readonly="readonly" /><br> -->
-        content:<br><textarea rows="10" cols="27" name="content"><?php SESSION_start();
-                                                                    $_SESSION['id'] = $id;
-                                                                    echo ($result['content']) ?></textarea>
+        <input type="hidden" name="id" value="<?= $result['id'] ?>">
+        Content:<br><textarea rows="10" cols="27" name="content"><?= $result['content'] ?></textarea>
         <input style="color: white; text-shadow: 1px 1px 2px black; border-radius: 10px; background-color: rgb(190, 116, 46);" type="submit" value="修改" />
     </form>
 </body>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete</title>
+    <title>Document</title>
 </head>
 
 <body>
@@ -28,8 +28,10 @@
         die();
     }
 
-    header("Location: index.php");
     ?>
+
+    <p>刪除成功！</p><br>
+    <a href="index.php">回首頁</a>
 
 </body>
 

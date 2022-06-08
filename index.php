@@ -45,7 +45,9 @@
     require_once('conn.php');
 
     try {
-      $sth = $dbh->prepare("SELECT board.id, users.username, board.content, board.create_time, board.update_time FROM board INNER JOIN users ON board.user_id=users.id ORDER BY board.id DESC");
+      $sth = $dbh->prepare("SELECT board.id, users.username, board.content, board.create_time, board.update_time 
+                            FROM board INNER JOIN users ON board.user_id=users.id
+                            ORDER BY board.id DESC");
       $sth->execute();
     } catch (PDOException $e) {
       print "Error!: " . $e->getMessage() . "<br/>";
@@ -77,7 +79,8 @@
               <?php
               if (!empty($_SESSION['username']) && ($_SESSION['username'] == $row['username'])) :
               ?>
-                <br><button class="styled" onclick="location.href='editPage.php?id=<?= $row['id'] ?>'">修改</button><br><button class="styled" onclick="location.href='deletePage.php?id=<?= $row['id'] ?>'">刪除</button>
+                <br><button class="styled" onclick="location.href='editPage.php?id=<?= $row['id'] ?>'">修改</button>
+                <br><button class="styled" onclick="deleteFunction(<?= $row['id'] ?>)">刪除</button>
               <?php
               endif;
               ?>
@@ -110,6 +113,16 @@
   $sth = null;
   $dbh = null;
   ?>
+
+  <script>
+    function deleteFunction(id) {
+      if (confirm("確定要刪除嗎？")) {
+        window.location.href = "delete.php?id=" + id;
+      } else {
+        window.location.href = "index.php";
+      }
+    }
+  </script>
 
 </body>
 
