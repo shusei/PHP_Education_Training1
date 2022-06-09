@@ -11,8 +11,6 @@
 <body>
     <a href="index.php">回首頁</a><br>
     <form method="POST" action="post.php">
-        <?php //name: <input type="text" name="username" /><br> 
-        ?>
         Content:<br><textarea rows="10" cols="27" name="content"></textarea>
         <input style="color: white; text-shadow: 1px 1px 2px black; border-radius: 10px; background-color: rgb(190, 116, 46);" type="submit" value="留言" />
     </form>

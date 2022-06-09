@@ -22,86 +22,88 @@
     ?>
         <p>密碼輸入不一致，請重新輸入！</p>
         <a href="javascript:history.back()">回上一頁</a>
-    <?php
-        die();
-    endif;
-
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-    $signup_time = date("Y-m-d h:i:s");
-
-    // Check already sign up
-    try {
-        $sth = $dbh->prepare("SELECT * FROM users WHERE email = :email OR username = :username");
-        $sth->execute(array(
-            'email' => $email,
-            'username' => $username
-        ));
-    } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
-        die();
-    }
-
-
-    if (!empty($sth->fetch(PDO::FETCH_ASSOC))) :
-        echo '<a href="javascript:history.back()">回上一頁</a><br>';
-        die("這個username或email已經被註冊過了");
+        <?php
     else :
-        // create
+        // Creates a password hash，Use the bcrypt algorithm with random salt(隨機數據)
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+        $signup_time = date("Y-m-d h:i:s");
+
+        // Check already sign up
         try {
-            $sth = $dbh->prepare("INSERT INTO users(username, email, password, signup_time)
-      VALUES(:username, :email, :password, :signup_time)");
+            $sth = $dbh->prepare("SELECT * FROM users WHERE email = :email OR username = :username");
             $sth->execute(array(
-                'username' => $username,
                 'email' => $email,
-                'password' => $password,
-                'signup_time' => $signup_time
+                'username' => $username
             ));
         } catch (PDOException $e) {
             print "Error!: " . $e->getMessage() . "<br/>";
             die();
         }
 
+        // ===, !== : 不只數值相等之外，型別也相等
+        if (null !== $sth->fetch(PDO::FETCH_ASSOC)) :
+        ?>
+            <p>這個username或email已經被註冊過了</p>
+            <a href="javascript:history.back()">回上一頁</a><br>
+        <?php
+        else :
+            // create
+            try {
+                $sth = $dbh->prepare("INSERT INTO users(username, email, password, signup_time)
+                                      VALUES(:username, :email, :password, :signup_time)");
+                $sth->execute(array(
+                    'username' => $username,
+                    'email' => $email,
+                    'password' => $password,
+                    'signup_time' => $signup_time
+                ));
+            } catch (PDOException $e) {
+                print "Error!: " . $e->getMessage() . "<br/>";
+                die();
+            }
 
-        // log in
-        $login_time = date("Y-m-d h:i:s");
 
-        try {
-            $sth = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
-            $sth->execute(array(
-                'username' => $username,
-                'password' => $password,
-            ));
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
-        $result = $sth->fetch(PDO::FETCH_ASSOC);
-        //print_r($result);
+            // log in
+            $login_time = date("Y-m-d h:i:s");
 
-        $id = $result['id'];
-        session_start();
-        $_SESSION['user_id'] = $id;
-        $_SESSION['username'] = $username;
+            try {
+                $sth = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+                $sth->execute(array(
+                    'username' => $username,
+                    'password' => $password,
+                ));
+            } catch (PDOException $e) {
+                print "Error!: " . $e->getMessage() . "<br/>";
+                die();
+            }
+            $result = $sth->fetch(PDO::FETCH_ASSOC);
+            //print_r($result);
 
-        // Add login time
-        try {
-            $sth = $dbh->prepare("UPDATE users SET login_time = :login_time WHERE id = :id");
-            $sth->execute(array(
-                'login_time' => $login_time,
-                'id' => $id
-            ));
-            $_SESSION['login_time'] = $login_time;
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
+            $id = $result['id'];
+            session_start();
+            $_SESSION['user_id'] = $id;
+            $_SESSION['username'] = $username;
 
-    ?>
+            // Add login time
+            try {
+                $sth = $dbh->prepare("UPDATE users SET login_time = :login_time WHERE id = :id");
+                $sth->execute(array(
+                    'login_time' => $login_time,
+                    'id' => $id
+                ));
+                $_SESSION['login_time'] = $login_time;
+            } catch (PDOException $e) {
+                print "Error!: " . $e->getMessage() . "<br/>";
+                die();
+            }
 
-        <p>註冊成功！</p><br>
-        <a href="index.php">登入</a>
+        ?>
+
+            <p>註冊成功！</p><br>
+            <a href="index.php">自動登入</a>
     <?php
+        endif;
     endif;
     ?>
 

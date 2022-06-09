@@ -18,49 +18,55 @@
     // log in
     $login_time = date("Y-m-d h:i:s");
 
-
     try {
         $sth = $dbh->prepare("SELECT * FROM users WHERE username = :username");
         $sth->execute(array(
             'username' => $username
-            //'password' => $password,
         ));
     } catch (PDOException $e) {
         print "Error!: " . $e->getMessage() . "<br/>";
         die();
     }
     $result = $sth->fetch(PDO::FETCH_ASSOC);
-    //print_r($result);
 
-    // hash password_verify
-    $hashVerify = password_verify($password, $result['password']);
+    if (!isset($result)) :
+    ?>
+        <p>使用者帳號不存在！</p>
+        <a href="javascript:history.back()">回上一頁</a>
+        <?php
+    else :
+        // hash password_verify
+        $hashVerify = password_verify($password, $result['password']);
 
-    if (!empty($result) && $hashVerify) {
+        if (!empty($result) && $hashVerify) :
 
-        $id = $result['id'];
-        session_start();
-        $_SESSION['user_id'] = $id;
-        $_SESSION['username'] = $username;
-        $_SESSION['login_time'] = $login_time;
+            $id = $result['id'];
+            session_start();
+            $_SESSION['user_id'] = $id;
+            $_SESSION['username'] = $username;
+            $_SESSION['login_time'] = $login_time;
 
 
-        // Add login time
-        try {
-            $sth = $dbh->prepare("UPDATE users SET login_time = :login_time WHERE id = :id");
-            $sth->execute(array(
-                'login_time' => $login_time,
-                'id' => $id
-            ));
-        } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
-            die();
-        }
+            // Add login time
+            try {
+                $sth = $dbh->prepare("UPDATE users SET login_time = :login_time WHERE id = :id");
+                $sth->execute(array(
+                    'login_time' => $login_time,
+                    'id' => $id
+                ));
+            } catch (PDOException $e) {
+                print "Error!: " . $e->getMessage() . "<br/>";
+                die();
+            }
 
-        header("Location: index.php");
-    } else {
-        echo "帳號或密碼錯誤，請重試。<br>";
-        echo '<a href="javascript:history.back()">回上一頁</a>';
-    }
+            header("Location: index.php");
+        else :
+        ?>
+            <p>"帳號或密碼錯誤，請重試。</p><br>
+            <a href="javascript:history.back()">回上一頁</a>
+    <?php
+        endif;
+    endif;
     ?>
 </body>
 

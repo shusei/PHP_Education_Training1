@@ -16,22 +16,29 @@
 
     $id = $_GET["id"];
 
-    checkName($id);
+    if (checkUserId($id)) :
 
-    try {
-        $sth = $dbh->prepare("DELETE FROM board WHERE id = :id");
-        $sth->execute(array(
-            'id' => $id
-        ));
-    } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
-        die();
-    }
+        try {
+            $sth = $dbh->prepare("DELETE FROM board WHERE id = :id");
+            $sth->execute(array(
+                'id' => $id
+            ));
+        } catch (PDOException $e) {
+            print "Error!: " . $e->getMessage() . "<br/>";
+            die();
+        }
 
     ?>
-
-    <p>刪除成功！</p><br>
-    <a href="index.php">回首頁</a>
+        <p>刪除成功！</p><br>
+        <a href="index.php">回首頁</a>
+    <?php
+    else :
+    ?>
+        <p>非使用者帳號不可修改</p>
+        <a href="index.php">回首頁</a>
+    <?php
+    endif;
+    ?>
 
 </body>
 

@@ -1,5 +1,5 @@
 <?php
-function checkName($id)
+function checkUserId($id)
 {
     require_once('conn.php');
 
@@ -20,19 +20,11 @@ function checkName($id)
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-    //echo $result['user_id'];
-    //echo $_SESSION['user_id'];
 
     // 判斷是不是session使用者修改自己資料
-    if ($result['user_id'] != $_SESSION['user_id']) :
-?>
-        <script>
-            alert("Don't hack me!");
-            self.location = 'index.php';
-        </script>
-<?php
-        die();
-    endif;
+    if ($result['user_id'] != $_SESSION['user_id']) {
+        return false;
+    } else {
+        return true;
+    }
 }
-
-?>

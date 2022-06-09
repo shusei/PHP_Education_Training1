@@ -15,21 +15,21 @@
   <div class="right">
     <?php
     session_start();
-    if (empty($_SESSION['user_id'])) {
+    if (!isset($_SESSION['user_id'])) :
     ?>
 
       <a href="loginPage.php">登入</a>
       <a href="signupPage.php">註冊</a>
       <!--  //echo 'session empty'; -->
     <?php
-    } else {
+    else :
     ?>
       我：<?= $_SESSION['username'] ?>
       <a href='logout.php'>登出</a> 最後登入時間：<?= $_SESSION['login_time'] ?><br>
       <button class="styled" onclick="location.href='postPage.php'">我要留言</button>
       <!--  //echo 'session no empty'; -->
     <?php
-    }
+    endif;
     ?>
 
 
