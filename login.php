@@ -16,7 +16,7 @@
     $password = $_POST['password'];
 
     // log in
-    $login_time = date("Y-m-d h:i:s");
+    $login_time = date("Y-m-d H:i:s");
 
     try {
         $sth = $dbh->prepare("SELECT * FROM users WHERE username = :username");

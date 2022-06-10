@@ -45,9 +45,11 @@
     require_once('conn.php');
 
     try {
-      $sth = $dbh->prepare("SELECT board.id, users.username, board.content, board.create_time, board.update_time 
-                            FROM board INNER JOIN users ON board.user_id=users.id
-                            ORDER BY board.id DESC");
+      $sth = $dbh->prepare("SELECT b.id, u.username, b.title, m.mood, b.content, b.create_time, b.update_time 
+                            FROM board AS b
+                            INNER JOIN users AS u ON u.id=b.user_id
+                            INNER JOIN moods AS m ON m.id=b.mood
+                            ORDER BY b.update_time DESC");
       $sth->execute();
     } catch (PDOException $e) {
       print "Error!: " . $e->getMessage() . "<br/>";
@@ -92,7 +94,12 @@
               <?= $row['username'] ?>
             </td>
             <td class="content">
+              標題：
+              <?= nl2br(htmlspecialchars($row['title'], ENT_QUOTES)) ?>
+              <br>--<br>
               <?= nl2br(htmlspecialchars($row['content'], ENT_QUOTES)) ?>
+              <br><br>--<br>心情：
+              <?= $row['mood'] ?>
             </td>
             <td>
               <?= $row['create_time'] ?>

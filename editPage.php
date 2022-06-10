@@ -25,14 +25,34 @@
             print "Error!: " . $e->getMessage() . "<br/>";
             die();
         }
-
         $result = $sth->fetch(PDO::FETCH_ASSOC);
+
+        $mood_id = $result['mood'];
+
+        try {
+            $sth2 = $dbh->prepare("SELECT * FROM moods");
+            $sth2->execute();
+        } catch (PDOException $e) {
+            print "Error!: " . $e->getMessage() . "<br/>";
+            die();
+        }
+        $result2 = $sth2->fetchAll();
     ?>
 
         <a href="index.php">回首頁</a><br>
         <form method="POST" action="edit.php">
             <input type="hidden" name="id" value="<?= $result['id'] ?>">
-            Content:<br><textarea rows="10" cols="27" name="content"><?= $result['content'] ?></textarea>
+            <label>Title:</label><br><textarea rows="1" cols="27" name="title"><?= $result['title'] ?></textarea><br>
+            <label>Content:</label><br><textarea rows="10" cols="27" name="content"><?= $result['content'] ?></textarea>
+            <select name="mood">
+                <?php
+                foreach ($result2 as $row) :
+                ?>
+                    <option value="<?= $row["id"] ?>" <?php if ($mood_id == $row["id"]) echo "selected" ?>><?= $row["mood"] ?></option>
+                <?php
+                endforeach;
+                ?>
+            </select>
             <input style="color: white; text-shadow: 1px 1px 2px black; border-radius: 10px; background-color: rgb(190, 116, 46);" type="submit" value="修改" />
         </form>
     <?php

@@ -23,16 +23,20 @@
   <?php
   else :
     $user_id = $_SESSION['user_id'];
+    $title = $_POST['title'];
     $content = $_POST['content'];
+    $mood = $_POST['mood'];
 
     // create time
-    $create_time = date("Y-m-d h:i:s");
+    $create_time = date("Y-m-d H:i:s");
 
     try {
-      $sth = $dbh->prepare("INSERT INTO board(user_id, content, create_time)
-    VALUES(:user_id, :content, :create_time)");
+      $sth = $dbh->prepare("INSERT INTO board(user_id, title, mood, content, create_time)
+                            VALUES(:user_id, :title, :mood, :content, :create_time)");
       $sth->execute(array(
         'user_id' => $user_id,
+        'title' => $title,
+        'mood' => $mood,
         'content' => $content,
         'create_time' => $create_time
       ));

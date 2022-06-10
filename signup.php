@@ -27,7 +27,7 @@
         // Creates a password hash，Use the bcrypt algorithm with random salt(隨機數據)
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-        $signup_time = date("Y-m-d h:i:s");
+        $signup_time = date("Y-m-d H:i:s");
 
         // Check already sign up
         try {

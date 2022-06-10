@@ -16,17 +16,21 @@
 
     session_start();
     $id = $_POST['id'];
+    $title = $_POST['title'];
     $content = $_POST['content'];
+    $mood = $_POST['mood'];
     //echo $id . " - " . $content;
 
 
     if (checkUserId($id)) :
         // update time
-        $update_time = date("Y-m-d h:i:s");
+        $update_time = date("Y-m-d H:i:s");
 
         try {
-            $sth = $dbh->prepare("UPDATE board SET content = :content, update_time = :update_time WHERE id = :id");
+            $sth = $dbh->prepare("UPDATE board SET title = :title, mood = :mood, content = :content, update_time = :update_time WHERE id = :id");
             $sth->execute(array(
+                'title' => $title,
+                'mood' => $mood,
                 'content' => $content,
                 'update_time' => $update_time,
                 'id' => $id
