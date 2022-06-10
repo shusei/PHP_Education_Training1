@@ -17,7 +17,7 @@
 
     if (checkUserId($id)) :
         try {
-            $sth = $dbh->prepare("SELECT * FROM board WHERE id = :id");
+            $sth = $dbh->prepare("SELECT * FROM boards WHERE id = :id");
             $sth->execute(array(
                 'id' => $id
             ));

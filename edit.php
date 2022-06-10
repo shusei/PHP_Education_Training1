@@ -24,15 +24,15 @@
 
     if (checkUserId($id)) :
         // update time
-        $update_time = date("Y-m-d H:i:s");
+        $updated_at = date("Y-m-d H:i:s");
 
         try {
-            $sth = $dbh->prepare("UPDATE board SET title = :title, mood = :mood, content = :content, update_time = :update_time WHERE id = :id");
+            $sth = $dbh->prepare("UPDATE boards SET title = :title, mood = :mood, content = :content, updated_at = :updated_at WHERE id = :id");
             $sth->execute(array(
                 'title' => $title,
                 'mood' => $mood,
                 'content' => $content,
-                'update_time' => $update_time,
+                'updated_at' => $updated_at,
                 'id' => $id
             ));
         } catch (PDOException $e) {

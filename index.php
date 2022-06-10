@@ -45,11 +45,11 @@
     require_once('conn.php');
 
     try {
-      $sth = $dbh->prepare("SELECT b.id, u.username, b.title, m.mood, b.content, b.create_time, b.update_time 
-                            FROM board AS b
+      $sth = $dbh->prepare("SELECT b.id, u.username, b.title, m.mood, b.content, b.created_at, b.updated_at 
+                            FROM boards AS b
                             INNER JOIN users AS u ON u.id=b.user_id
                             INNER JOIN moods AS m ON m.id=b.mood
-                            ORDER BY b.update_time DESC");
+                            ORDER BY b.updated_at DESC");
       $sth->execute();
     } catch (PDOException $e) {
       print "Error!: " . $e->getMessage() . "<br/>";
@@ -102,10 +102,10 @@
               <?= $row['mood'] ?>
             </td>
             <td>
-              <?= $row['create_time'] ?>
+              <?= $row['created_at'] ?>
             </td>
             <td>
-              <?= $row['update_time'] ?>
+              <?= $row['updated_at'] = ($row['created_at'] == $row['updated_at']) ? '' : ($row['updated_at']); ?>
             </td>
           </tr>
         <?php

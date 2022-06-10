@@ -33,8 +33,8 @@
     <div>
       <?php
       try {
-        $sth = $dbh->prepare("SELECT board.id, users.username, board.content, board.create_time, board.update_time 
-                            FROM board INNER JOIN users ON board.user_id=users.id
+        $sth = $dbh->prepare("SELECT b.id, users.username, b.content, b.created_at, b.updated_at 
+                            FROM boards AS b INNER JOIN users ON b.user_id=users.id
                             WHERE content LIKE :content OR username LIKE :username
                             ORDER BY id DESC");
         $sth->execute(array(
@@ -77,10 +77,10 @@
                   <?= nl2br(htmlspecialchars($row['content'], ENT_QUOTES)) ?>
                 </td>
                 <td>
-                  <?= $row['create_time'] ?>
+                  <?= $row['created_at'] ?>
                 </td>
                 <td>
-                  <?= $row['update_time'] ?>
+                  <?= $row['updated_at'] ?>
                 </td>
               </tr>
             <?php

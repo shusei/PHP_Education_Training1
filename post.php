@@ -28,17 +28,19 @@
     $mood = $_POST['mood'];
 
     // create time
-    $create_time = date("Y-m-d H:i:s");
+    $created_at = date("Y-m-d H:i:s");
+    $updated_at = $created_at;
 
     try {
-      $sth = $dbh->prepare("INSERT INTO board(user_id, title, mood, content, create_time)
-                            VALUES(:user_id, :title, :mood, :content, :create_time)");
+      $sth = $dbh->prepare("INSERT INTO boards(user_id, title, mood, content, created_at, updated_at)
+                            VALUES(:user_id, :title, :mood, :content, :created_at, :updated_at)");
       $sth->execute(array(
         'user_id' => $user_id,
         'title' => $title,
         'mood' => $mood,
         'content' => $content,
-        'create_time' => $create_time
+        'created_at' => $created_at,
+        'updated_at' => $updated_at
       ));
     } catch (PDOException $e) {
       print "Error!: " . $e->getMessage() . "<br/>";

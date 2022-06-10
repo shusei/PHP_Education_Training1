@@ -19,7 +19,7 @@
     if (checkUserId($id)) :
 
         try {
-            $sth = $dbh->prepare("DELETE FROM board WHERE id = :id");
+            $sth = $dbh->prepare("DELETE FROM boards WHERE id = :id");
             $sth->execute(array(
                 'id' => $id
             ));
