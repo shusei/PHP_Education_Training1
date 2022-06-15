@@ -15,12 +15,25 @@
         <label>Content:</label><br><textarea rows="10" cols="27" name="content"></textarea><br>
         <select name="mood">
             <option value="">--請選擇一個心情--</option>
-            <option value="1">大笑</option>
-            <option value="2">微笑</option>
-            <option value="3">愛心</option>
-            <option value="4">哭泣</option>
-            <option value="5">生氣</option>
-            <option value="6">好奇</option>
+            <!-- TODO 讀資料庫 -->
+            <?php
+            require_once('conn.php');
+
+            try {
+                $sth = $dbh->prepare("SELECT * FROM moods");
+                $sth->execute();
+            } catch (PDOException $e) {
+                print "Error!: " . $e->getMessage() . "<br/>";
+                die();
+            }
+            $results = $sth->fetchAll();
+
+            foreach ($results as $result) :
+            ?>
+                <option value="<?= $result["id"] ?>"><?= $result["mood"] ?></option>
+            <?php
+            endforeach;
+            ?>
         </select>
         <input style="color: white; text-shadow: 1px 1px 2px black; border-radius: 10px; background-color: rgb(190, 116, 46);" type="submit" value="留言" />
     </form>

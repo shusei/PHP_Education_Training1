@@ -82,6 +82,7 @@
               if (!empty($_SESSION['username']) && ($_SESSION['username'] == $row['username'])) :
               ?>
                 <br><button class="styled" onclick="location.href='editPage.php?id=<?= $row['id'] ?>'">修改</button>
+                <!-- 將delete功能改做在index，刪除deletePage.php頁面，在此呼叫deleteFunction(id) -->
                 <br><button class="styled" onclick="deleteFunction(<?= $row['id'] ?>)">刪除</button>
               <?php
               endif;
@@ -121,12 +122,12 @@
   $dbh = null;
   ?>
 
+
+  <!-- Javescritp的function(傳入id) -->
   <script>
     function deleteFunction(id) {
       if (confirm("確定要刪除嗎？")) {
         window.location.href = "delete.php?id=" + id;
-      } else {
-        window.location.href = "index.php";
       }
     }
   </script>

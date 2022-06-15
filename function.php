@@ -21,7 +21,7 @@ function checkUserId($id)
         session_start();
     }
 
-    // 判斷是不是session使用者修改自己資料
+    // 判斷是不是session使用者修改自己資料，並回傳boolean值
     if ($result['user_id'] != $_SESSION['user_id']) {
         return false;
     } else {

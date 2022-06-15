@@ -27,6 +27,8 @@
         // Creates a password hash，Use the bcrypt algorithm with random salt(隨機數據)
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
+        // 小bug，之前參數是("Y-m-d h:i:s")，小寫h會讓上午下午分辨不出來
+        // 除非s改sa，才會印出am or pm，但 h 改 H 即可顯示24小時制
         $signup_time = date("Y-m-d H:i:s");
 
         // Check already sign up
@@ -42,7 +44,8 @@
         }
 
         // ===, !== : 不只數值相等之外，型別也相等
-        if (null !== $sth->fetch(PDO::FETCH_ASSOC)) :
+        // null len()==0
+        if ($sth->fetch(PDO::FETCH_ASSOC) !== null) :
         ?>
             <p>這個username或email已經被註冊過了</p>
             <a href="javascript:history.back()">回上一頁</a><br>

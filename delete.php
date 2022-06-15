@@ -16,6 +16,7 @@
 
     $id = $_GET["id"];
 
+    // 改寫之前的checkName($id)為 bool checkUserId($id)
     if (checkUserId($id)) :
 
         try {
